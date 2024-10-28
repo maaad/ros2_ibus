@@ -20,7 +20,8 @@ class iBusPublisher(Node):
 		
 		if data[0]==32 and data[1]==64:
 				msg = Joy()
-				msg.header = self.i
+				msg.header.stamp = self.get_clock().now().to_msg()
+				msg.header.frame_id = self.i
 				msg.data = data[2:9]
 				msg.buttons = data[8:11]
 				
