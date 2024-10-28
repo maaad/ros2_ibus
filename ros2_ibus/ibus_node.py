@@ -7,7 +7,7 @@ from flySkyiBus import IBus
 
 class iBusPublisher(Node):
 	def __init__(self, bus='/dev/serial0'):
-		super().__init__('joy_node')
+		super().__init__('ibus_node')
 
 		self.bus = IBus(bus)
 		self.publisher_ = self.create_publisher(Joy, 'joy', 1)

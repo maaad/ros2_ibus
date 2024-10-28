@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'ros2_iBus'
+package_name = 'ros2_ibus'
 
 setup(
     name=package_name,
@@ -13,14 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='raspi',
-    maintainer_email='raspi@todo.todo',
+    maintainer='jabax',
+    maintainer_email='jaime.bravo.algaba@gmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'iBus_node = ros2_iBus.iBus_node:main'
+            'ibus_node = ros2_ibus.ibus_node:main'
         ],
     },
 )
