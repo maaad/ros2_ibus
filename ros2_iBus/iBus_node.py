@@ -7,26 +7,28 @@ from flySkyiBus import IBus
 
 class iBusPublisher(Node):
 	def __init__(self, bus='/dev/serial0'):
-		super().__init__('rc_channels')
-		self.publisher_ = self.create_publisher(Joy, 'topic', 10)
-		timer_period = 0.01  # seconds
-		self.timer = self.create_timer(timer_period, self.timer_callback)
+		super().__init__('joy_node')
 
 		self.bus = IBus(bus)
+		self.publisher_ = self.create_publisher(Joy, 'joy', 10)
 
-	def timer_callback(self):
-		data = self.bus.read()  # Read data from serial port
-		
-		if data[0]==32 and data[1]==64:
-				msg = Joy()
-				msg.header.stamp = self.get_clock().now().to_msg()
-				msg.header.frame_id = '0'
-				msg.axes = data[2:9]
-				msg.buttons = data[8:11]
+		while True:
+			data = self.bus.read()  # Read data from serial port
 				
-				self.publisher_.publish(msg)
-		else:
-			pass
+			if data[0]==32 and data[1]==64:
+					self.msg = Joy()
+					self.msg.header.stamp = self.get_clock().now().to_msg()
+					self.msg.header.frame_id = '0'
+					
+					for i in range(2, 6):
+						self.msg.axes.append(float((data[i] - 1000)/1000))
+					
+					for i in range(6, 8):
+						self.msg.buttons.append(int(data[i] - 1000))				
+					
+					self.publisher_.publish(self.msg)
+			else:
+				pass
 
 def main(args=None):
     rclpy.init(args=args)
