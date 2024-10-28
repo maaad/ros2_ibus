@@ -10,7 +10,7 @@ class iBusPublisher(Node):
 		super().__init__('joy_node')
 
 		self.bus = IBus(bus)
-		self.publisher_ = self.create_publisher(Joy, 'joy', 10)
+		self.publisher_ = self.create_publisher(Joy, 'joy', 1)
 
 		while True:
 			data = self.bus.read()  # Read data from serial port
@@ -18,10 +18,10 @@ class iBusPublisher(Node):
 			if data[0]==32 and data[1]==64:
 					self.msg = Joy()
 					self.msg.header.stamp = self.get_clock().now().to_msg()
-					self.msg.header.frame_id = '0'
+					self.msg.header.frame_id = ''
 					
 					for i in range(2, 6):
-						self.msg.axes.append(float((data[i] - 1000)/1000))
+						self.msg.axes.append(float((data[i] - 1500)/500))
 					
 					for i in range(6, 8):
 						self.msg.buttons.append(int(data[i] - 1000))				
