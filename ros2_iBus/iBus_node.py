@@ -16,7 +16,7 @@ class iBusPublisher(Node):
 		self.bus = IBus(bus)
 
 	def timer_callback(self):
-		data = bus.read()  # Read data from serial port
+		data = self.bus.read()  # Read data from serial port
 		
 		if data[0]==32 and data[1]==64:
 				msg = Joy()
