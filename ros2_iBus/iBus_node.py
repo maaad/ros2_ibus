@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import Joy
+from sensor_msgs.msg import Joy
 
 from flySkyiBus import IBus
 
