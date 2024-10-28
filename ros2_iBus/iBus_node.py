@@ -11,7 +11,6 @@ class iBusPublisher(Node):
 		self.publisher_ = self.create_publisher(Joy, 'topic', 10)
 		timer_period = 0.01  # seconds
 		self.timer = self.create_timer(timer_period, self.timer_callback)
-		self.i = 0
 
 		self.bus = IBus(bus)
 
@@ -21,12 +20,11 @@ class iBusPublisher(Node):
 		if data[0]==32 and data[1]==64:
 				msg = Joy()
 				msg.header.stamp = self.get_clock().now().to_msg()
-				msg.header.frame_id = self.i
+				msg.header.frame_id = '0'
 				msg.data = data[2:9]
 				msg.buttons = data[8:11]
 				
-				self.publisher_.publish(msg)        	
-				self.i += 1
+				self.publisher_.publish(msg)
 		else:
 			pass
 
