@@ -21,7 +21,7 @@ class iBusPublisher(Node):
 				msg = Joy()
 				msg.header.stamp = self.get_clock().now().to_msg()
 				msg.header.frame_id = '0'
-				msg.data = data[2:9]
+				msg.axes = data[2:9]
 				msg.buttons = data[8:11]
 				
 				self.publisher_.publish(msg)
