@@ -1,4 +1,4 @@
-# ROS2 iBus Package
+# ros2_ibus Package
 This package allows you to easily read the channels of an RC receiver using Flysky's iBus protocol. It utilizes the Python library [flySkyiBus](https://pypi.org/project/flySkyiBus) to obtain serial readings from the receiver. This package has been tested with a Flysky receiver FS-iA6B and a Raspberry Pi4B, making the following connections:
 
 | Pin on Receiver | Pin on Raspberry Pi | Description          |
