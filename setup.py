@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'ibus_node = ros2_ibus.ibus_node:main'
+            'ibus_node = ros2_ibus.ibus_node:main',
+            'ibus_viewer_node = ros2_ibus.ibus_viewer_node:main'
         ],
     },
 )
