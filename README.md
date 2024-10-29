@@ -1,2 +1,40 @@
-# ros2_ibus
-This package allows to easily read the channels of a RC receiver by using Flysky's iBus protocol. To do it, this packages uses the Python library "flySkyiBus" (https://pypi.org/project/flySkyiBus) to get the serial readings from the receiver.
+# ROS2 iBus Package
+This package allows you to easily read the channels of an RC receiver using Flysky's iBus protocol. It utilizes the Python library [flySkyiBus](https://pypi.org/project/flySkyiBus) to obtain serial readings from the receiver.
+
+It also provides a node to visualize the readings of the different channels.
+
+![iBus Viewer Node](img/ibus_viewer_node.png)
+
+## Nodes
+
+### ibus_node
+
+ROS2 node to read data from the iBus and publish Joy messages.
+
+**Publishes:** `/joy`
+
+### ibus_viewer_node
+
+ROS2 node that subscribes to the `/joy` topic and plots the axes and buttons data in real-time.
+
+**Subscribes:** `/joy`
+
+**Functionality:** This node listens to the `Joy` messages published on the `/joy` topic and provides a real-time visualization of the axes and buttons data, making it easier to monitor and debug the RC receiver's output.
+
+## Installation
+
+To install this package, clone the repository into your ROS2 workspace and build it using colcon:
+
+```sh
+cd ~/ros2_ws/src
+git clone https://github.com/JaimeBravoAlgaba/ros2_ibus.git
+cd ~/ros2_ws
+colcon build
+```
+
+## Usage
+
+```sh
+ros2 run ros2_ibus ibus_node
+ros2 run ros2_ibus ibus_viewer_node
+```

@@ -1,46 +1,58 @@
+# Description: ROS2 node to read data from the iBus and publish Joy messages
+
 import rclpy
 from rclpy.node import Node
-
 from sensor_msgs.msg import Joy
-
 from flySkyiBus import IBus
 
+# Define the iBusPublisher class
 class iBusPublisher(Node):
 	def __init__(self, bus='/dev/serial0'):
 		super().__init__('ibus_node')
 
+		# Initialize the IBus object with the specified bus
 		self.bus = IBus(bus)
+		
+		# Create a publisher for the Joy message on the 'joy' topic
 		self.publisher_ = self.create_publisher(Joy, 'joy', 1)
 
+		# Main loop to read data from the iBus and publish Joy messages
 		while True:
 			data = self.bus.read()  # Read data from serial port
+
+			# Check if the data is valid
+			if data[0] == 32 and data[1] == 64:
+				self.msg = Joy()
+				self.msg.header.stamp = self.get_clock().now().to_msg()
+				self.msg.header.frame_id = ''
 				
-			if data[0]==32 and data[1]==64:
-					self.msg = Joy()
-					self.msg.header.stamp = self.get_clock().now().to_msg()
-					self.msg.header.frame_id = ''
-					
-					for i in range(2, 6):
-						self.msg.axes.append(float((data[i] - 1500)/500))
-					
-					for i in range(6, 8):
-						self.msg.buttons.append(int(data[i] - 1000))				
-					
-					self.publisher_.publish(self.msg)
+				# Populate the axes field of the Joy message
+				for i in range(2, 6):
+					self.msg.axes.append(float((data[i] - 1500) / 500))
+				
+				# Populate the buttons field of the Joy message
+				for i in range(6, 8):
+					self.msg.buttons.append(int(data[i] - 1000))
+				
+				# Publish the Joy message
+				self.publisher_.publish(self.msg)
 			else:
 				pass
 
+# Main function to initialize and spin the ROS node
 def main(args=None):
-    rclpy.init(args=args)
+	rclpy.init(args=args)
 
-    iBus_publisher = iBusPublisher()
+	# Create an instance of the iBusPublisher
+	iBus_publisher = iBusPublisher()
 
-    rclpy.spin(iBus_publisher)
+	# Spin the node to keep it active
+	rclpy.spin(iBus_publisher)
 
-    # Destroy the node explicitly
-    iBus_publisher.destroy_node()
-    rclpy.shutdown()
+	# Destroy the node explicitly
+	iBus_publisher.destroy_node()
+	rclpy.shutdown()
 
-
+# Entry point of the script
 if __name__ == '__main__':
-    main()
+	main()
