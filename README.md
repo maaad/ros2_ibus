@@ -5,7 +5,7 @@ This package allows you to easily read the channels of an RC receiver using Flys
 |-----------------|---------------------|----------------------|
 | VCC             | 5V                  | Power supply         |
 | GND             | GND                 | Ground               |
-| iBus servos     | GPIO 15 (UART RX)   | Serial data receive  |
+| iBus SERVO      | GPIO 15 (UART RX)   | Serial data receive  |
 
 ![FS-iA6B Connections](img/fsia6b_connections.png)
 
