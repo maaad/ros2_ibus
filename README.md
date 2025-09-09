@@ -9,9 +9,7 @@ This package allows you to easily read the channels of an RC receiver using Flys
 
 ![FS-iA6B Connections](img/fsia6b_connections.png)
 
-It also provides a node to visualize the readings of the different channels.
-
-![iBus Viewer Node](img/ibus_viewer_node.png)
+It also provides a console viewer to visualize the readings of the different channels.
 
 ## Nodes
 
@@ -21,13 +19,13 @@ ROS2 node to read data from the iBus and publish Joy messages.
 
 **Publishes:** `/joy`
 
-### ibus_viewer_node
+### ibus_console_viewer_node
 
-ROS2 node that subscribes to the `/joy` topic and plots the axes and buttons data in real-time.
+ROS2 node that subscribes to the `/joy` topic and displays the axes and buttons data in the console.
 
 **Subscribes:** `/joy`
 
-**Functionality:** This node listens to the `Joy` messages published on the `/joy` topic and provides a real-time visualization of the axes and buttons data, making it easier to monitor and debug the RC receiver's output.
+**Functionality:** This node listens to the `Joy` messages published on the `/joy` topic and provides a real-time console visualization of the axes and buttons data, making it easier to monitor and debug the RC receiver's output.
 
 ## Installation
 
@@ -35,7 +33,7 @@ To install this package, clone the repository into your ROS2 workspace and build
 
 ```sh
 cd ~/ros2_ws/src
-git clone https://github.com/JaimeBravoAlgaba/ros2_ibus.git
+git clone https://github.com/maaad/ros2_ibus.git
 cd ~/ros2_ws
 colcon build
 ```
@@ -44,5 +42,9 @@ colcon build
 
 ```sh
 ros2 run ros2_ibus ibus_node
-ros2 run ros2_ibus ibus_viewer_node
+ros2 run ros2_ibus ibus_console_viewer_node
 ```
+
+## Credits
+
+https://github.com/JaimeBravoAlgaba/ros2_ibus
