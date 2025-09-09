@@ -7,12 +7,12 @@ from flySkyiBus import IBus
 
 # Define the iBusPublisher class
 class iBusPublisher(Node):
-	def __init__(self, bus='/dev/serial0'):
+	def __init__(self, bus='/dev/ttyAMA0'):
 		super().__init__('ibus_node')
 
 		# Initialize the IBus object with the specified bus
 		self.bus = IBus(bus)
-		
+
 		# Create a publisher for the Joy message on the 'joy' topic
 		self.publisher_ = self.create_publisher(Joy, 'joy', 1)
 
@@ -25,15 +25,11 @@ class iBusPublisher(Node):
 				self.msg = Joy()
 				self.msg.header.stamp = self.get_clock().now().to_msg()
 				self.msg.header.frame_id = ''
-				
-				# Populate the axes field of the Joy message
-				for i in range(2, 6):
+
+				# Populate the axes field of the Joy message (10 channels)
+				for i in range(2, 12):
 					self.msg.axes.append(float((data[i] - 1500) / 500))
-				
-				# Populate the buttons field of the Joy message
-				for i in range(6, 8):
-					self.msg.buttons.append(int(data[i] - 1000))
-				
+
 				# Publish the Joy message
 				self.publisher_.publish(self.msg)
 			else:
